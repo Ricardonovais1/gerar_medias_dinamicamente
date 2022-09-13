@@ -9,5 +9,3 @@ function average() {
     return sum(...arguments) / arguments.length
 }
 
-console.log(sum(10, 3, 7.5, 3))
-console.log(average(10, 3, 7.5, 3))

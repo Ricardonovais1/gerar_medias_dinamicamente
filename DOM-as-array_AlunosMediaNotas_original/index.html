@@ -30,11 +30,11 @@
         <thead>
           <tr>
               <th>Nome</th>
-              <th>Nota 1</th>
-              <th>Nota 2</th>
-              <th>Nota 3</th>
-              <th>Nota 4</th>
-              <th>Média</th>
+              <th identificador-nota="n1">Nota 1</th>
+              <th identificador-nota="n2">Nota 2</th>
+              <th identificador-nota="n3">Nota 3</th>
+              <th identificador-nota="n4">Nota 4</th>
+              <th identificador-nota="media">Média</th>
               
           </tr>
         </thead>
@@ -140,8 +140,30 @@
       <script>
 
           (function(){
-            const tBody = document.querySelector(".striped tbody");
-          const trs = tBody.querySelectorAll("tr");
+
+          const tHead = document.querySelector('thead');
+          const trHead = document.querySelector('thead tr');
+          const thsHeader = trHead.querySelectorAll('th');
+          const thsId = document.querySelectorAll('[identificador-nota]');
+          //====================
+          const tBody = document.querySelector(".striped tbody");
+
+          const trs = document.querySelectorAll("tBody tr");
+
+          let INDICES_NOTA = {}
+          console.log(INDICES_NOTA)
+
+
+          Array.from(thsId).forEach((th) => {
+            let identificadorNota = th.getAttribute('identificador-nota');
+            INDICES_NOTA[identificadorNota] = pegaIndice(identificadorNota);
+          })
+
+          function pegaIndice(identificador) {
+            let th = trHead.querySelector(`[identificador-nota="${identificador}"]`);
+            let indice = [...thsHeader].indexOf(th);
+            return indice
+          }        
 
           let trCount = 0;
           let gradeAverage = 0;
@@ -150,28 +172,22 @@
 
             let tds = trs[trCount].querySelectorAll("td");
 
-            console.log(tds)
 
             gradeAverage = average(
-              parseFloat(tds[1].textContent),
-              parseFloat(tds[2].textContent),
-              parseFloat(tds[3].textContent),
-              parseFloat(tds[4].textContent)
+              parseFloat(tds[INDICES_NOTA.n1].textContent),
+              parseFloat(tds[INDICES_NOTA.n2].textContent),
+              parseFloat(tds[INDICES_NOTA.n3].textContent),
+              parseFloat(tds[INDICES_NOTA.n4].textContent)
             )         
 
-            tds[5].textContent = gradeAverage.toFixed(1)
+            tds[INDICES_NOTA.media].textContent = gradeAverage.toFixed(1)
+
+            console.log(gradeAverage)
 
             trCount ++
           }
 
-        })()
-
-        
-        
-
-        
-
-
+        })()  
 
       </script>
 
